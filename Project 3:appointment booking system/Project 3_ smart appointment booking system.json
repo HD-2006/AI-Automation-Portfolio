@@ -1,0 +1,77 @@
+{
+  "name": "Project 3: smart appointment booking system",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Appointment booking",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "71373825-4a22-4e4d-b5e8-55c8f46c8d2d",
+      "name": "Webhook",
+      "webhookId": "6ceaf5fe-75b3-4723-9ce5-af3a44a104cd"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "19c9b5fec0f28e778bce2fd370401f9315964f640c411ac2e584bb7fcba20bc4@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Primary"
+        },
+        "start": "={{ $json.body.date }}T{{ $json.body.time }}:00",
+        "end": "={{ $json.body.date }}T11:00:00",
+        "additionalFields": {
+          "summary": "={{ $json.body.name }}\n\n{{ $json.body.email }}\n\n{{ $json.body.service }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "e29a9967-6715-4ddb-8fb4-a650372d420a",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "NrA8JPrQ1LfnM66d",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "37320fdf-626d-4c17-9ee1-585928f3fe3b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ce7ba09317d93819395d86c5e901248a252bf2a6c94ae1e76eebdcb31ae9d932"
+  },
+  "nodeGroups": [],
+  "id": "KkvWAhu0YHY8x73j",
+  "tags": []
+}

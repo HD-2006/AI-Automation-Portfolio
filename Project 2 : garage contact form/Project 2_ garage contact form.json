@@ -1,0 +1,212 @@
+{
+  "name": "Project 2: garage contact form",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Garage enquiry ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4c36304b-828a-4f7f-8d84-85034ad25b68",
+      "name": "Webhook",
+      "webhookId": "c288dd7d-51d5-45e7-b08f-67bb83390791"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "198QktRRQqjDjTKWSHWUV9E9iHybxoNBN8O2er7h9AYA",
+          "mode": "list",
+          "cachedResultName": "customer enquiries",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/198QktRRQqjDjTKWSHWUV9E9iHybxoNBN8O2er7h9AYA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/198QktRRQqjDjTKWSHWUV9E9iHybxoNBN8O2er7h9AYA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.name }}",
+            "Email": "={{ $json.body.email }}",
+            "Car": "={{ $json.body.car }}",
+            "Message ": "={{ $json.body.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Car",
+              "displayName": "Car",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message ",
+              "displayName": "Message ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Column 6",
+              "displayName": "Column 6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "e3a7a542-b7a3-4982-a92f-bf68e6ecca67",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hokyF9ciSxz6czxc",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "dishalis06@gmail.com",
+        "subject": "=new garage enquiry-{{ $('Webhook').item.json.body.name }}",
+        "message": "=new customer enquiry received.\n{{ $('Webhook').item.json.body.name }}\n{{ $('Webhook').item.json.body.email }}\n{{ $('Webhook').item.json.body.car }}\n{{ $('Webhook').item.json.body.message }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "aea10a3c-6ff4-4ca6-baaf-d8bc637c2eb4",
+      "name": "Send a message",
+      "webhookId": "63500e7f-2cff-40fc-8b14-9fe665e6074b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "i2g7BFhDkRvHXWx1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "=we've recieved your enquiry. -{{ $('Webhook').item.json.body.name }}",
+        "message": "=Hi {{ $('Webhook').item.json.body.name }}\nThank you for contacting us.\nwe've recieved your enquiry regarding the {{ $('Webhook').item.json.body.car }}\na memeber of our team will get back to you shortly.\n\nkind regards,\nabc garage\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -128
+      ],
+      "id": "94c4ec01-3766-4c80-b915-db6d4cd5ea26",
+      "name": "Send a message1",
+      "webhookId": "63500e7f-2cff-40fc-8b14-9fe665e6074b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "i2g7BFhDkRvHXWx1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "eeb49939-e9d6-4dde-8467-9e912df5c0fa",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ce7ba09317d93819395d86c5e901248a252bf2a6c94ae1e76eebdcb31ae9d932"
+  },
+  "nodeGroups": [],
+  "id": "ixgsbzONCW304rDV",
+  "tags": []
+}

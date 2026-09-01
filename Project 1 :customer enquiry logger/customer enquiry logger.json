@@ -1,0 +1,394 @@
+{
+  "name": "customer enquiry logger",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "806fce3b-6c8d-46f6-9a2a-734610cf0f32",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0a07f749-e2fe-4b6f-b019-ff3884bd3b8a",
+              "name": "name ",
+              "value": "John",
+              "type": "string"
+            },
+            {
+              "id": "5cab161a-c0eb-479b-92ab-52ef8ca297cf",
+              "name": "email",
+              "value": "john@example.com",
+              "type": "string"
+            },
+            {
+              "id": "9d74311c-4353-47ee-af51-46e8fbd2e64a",
+              "name": "car",
+              "value": "mercedes c63",
+              "type": "string"
+            },
+            {
+              "id": "4e49ef63-0217-4599-bef0-b9903390fb6e",
+              "name": "message",
+              "value": "my engine warning light is on and I need help today",
+              "type": "string"
+            },
+            {
+              "id": "676908b8-2cb0-4a18-96b9-025c67e1b236",
+              "name": "priority",
+              "value": "urgent",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "c682d9fb-fe62-44d3-abe3-92a7b37735af",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b822d404-1104-4b84-b767-3d64cf9eef84",
+              "leftValue": "={{ $json.priority }}",
+              "rightValue": "urgent",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "b333ecf7-9306-45d4-8476-c1505e2cff4e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "198QktRRQqjDjTKWSHWUV9E9iHybxoNBN8O2er7h9AYA",
+          "mode": "list",
+          "cachedResultName": "customer enquiries",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/198QktRRQqjDjTKWSHWUV9E9iHybxoNBN8O2er7h9AYA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/198QktRRQqjDjTKWSHWUV9E9iHybxoNBN8O2er7h9AYA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json['name '] }}",
+            "Email": "={{ $json.email }}",
+            "Car": "={{ $json.car }}",
+            "Message ": "={{ $json.message }}",
+            "Priority": "={{ $json.priority }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Car",
+              "displayName": "Car",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message ",
+              "displayName": "Message ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Column 6",
+              "displayName": "Column 6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "cc11a240-f8ac-4bb2-965b-9721f534b848",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hokyF9ciSxz6czxc",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1y2qBvhozqlMqIoAzoOgxxfqBm0xmRpUVVnxFKSzgWRw",
+          "mode": "list",
+          "cachedResultName": "normal enquiries",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y2qBvhozqlMqIoAzoOgxxfqBm0xmRpUVVnxFKSzgWRw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y2qBvhozqlMqIoAzoOgxxfqBm0xmRpUVVnxFKSzgWRw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ $('Edit Fields').item.json['name '] }}",
+            "email": "={{ $('Edit Fields').item.json.email }}",
+            "Car": "={{ $('Edit Fields').item.json.car }}",
+            "message": "={{ $('Edit Fields').item.json.message }}",
+            "Column 5": "={{ $('Edit Fields').item.json.priority }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Car",
+              "displayName": "Car",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Column 5",
+              "displayName": "Column 5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Column 6",
+              "displayName": "Column 6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        704,
+        128
+      ],
+      "id": "32b80b67-2e42-41aa-ae3d-425aea55cf49",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hokyF9ciSxz6czxc",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "dishalis06@gmail.com",
+        "subject": "Urgent garage enquiry received ",
+        "message": "={{ $json.Name }}\n{{ $json.Email }}\n{{ $json.Car }}\n{{ $json['Message '] }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "99329739-71bd-4e31-bf9c-be9b40e848ef",
+      "name": "Send a message",
+      "webhookId": "28a5bf2b-5268-459d-85a8-905287079d15",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "i2g7BFhDkRvHXWx1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d7395c2c-4eff-43bb-8c80-31780f433f38",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ce7ba09317d93819395d86c5e901248a252bf2a6c94ae1e76eebdcb31ae9d932"
+  },
+  "nodeGroups": [],
+  "id": "eOqwq4vxdcuFakRs",
+  "tags": []
+}
