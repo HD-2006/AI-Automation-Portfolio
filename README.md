@@ -1,22 +1,39 @@
-AI Automation Portfolio
+# AI Automation Portfolio
 
 A collection of production-ready AI automation workflows built using n8n, OpenAI, Google Workspace and webhooks.
 
-Projects
+## Projects
 
-Customer Enquiry Logger
-Automatically captures enquiries from a website, categorises them with AI and stores them in Google Sheets.
+### Customer Enquiry Logger
+Problem:
+- Businesses receive enquiries through forms and emails that often go unanswered or aren't tracked.
 
-Garage Contact Form
-Processes customer enquiries and sends instant notifications.
+Solution:
+- This workflow captures every enquiry, classifies it using OpenAI, stores it inside Google Sheets and instantly alerts the business owner.
 
- Appointment Booking System
+
+### Garage Contact Form
+- Problem:
+- Businesses receive website enquiries but often don't respond quickly enough.
+Solution:
+- Uses AI to categorise enquiries, notify the business instantly and save leads for follow-up.
+
+
+ ### Appointment Booking System
 Handles booking requests, availability and confirmations automatically.
+Problem:
+- Booking appointments manually takes time and causes scheduling mistakes.
+Solution:
+- Automatically checks availability, confirms bookings and updates calendars.
 
- AI Customer Support Agent
+### AI Customer Support Agent
 An AI-powered chatbot that answers customer questions and escalates when required.
+Problem:
+- Businesses spend too much time answering the same customer questions.
+Solution:
+- AI answers common questions instantly and escalates complex enquiries when needed.
 
- Tech Stack:
+ ## Tech Stack
 
 - n8n
 - OpenAI
