@@ -22,6 +22,7 @@ Solution:
 
  ### Appointment Booking System
 Handles booking requests, availability and confirmations automatically.
+ 
  Problem:
 -Booking appointments manually takes time and causes scheduling mistakes.
  
