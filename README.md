@@ -15,6 +15,7 @@ Solution:
 ### Garage Contact Form
 - Problem:
 - Businesses receive website enquiries but often don't respond quickly enough.
+
 Solution:
 - Uses AI to categorise enquiries, notify the business instantly and save leads for follow-up.
 
@@ -23,6 +24,7 @@ Solution:
 Handles booking requests, availability and confirmations automatically.
  Problem:
 -Booking appointments manually takes time and causes scheduling mistakes.
+ 
  Solution:
 -Automatically checks availability, confirms bookings and updates calendars.
 
@@ -30,6 +32,7 @@ Handles booking requests, availability and confirmations automatically.
 An AI-powered chatbot that answers customer questions and escalates when required.
 Problem:
 - Businesses spend too much time answering the same customer questions.
+
 Solution:
 - AI answers common questions instantly and escalates complex enquiries when needed.
 
