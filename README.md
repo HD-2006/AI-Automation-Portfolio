@@ -21,10 +21,10 @@ Solution:
 
  ### Appointment Booking System
 Handles booking requests, availability and confirmations automatically.
-Problem:
-- Booking appointments manually takes time and causes scheduling mistakes.
-Solution:
-- Automatically checks availability, confirms bookings and updates calendars.
+ Problem:
+-Booking appointments manually takes time and causes scheduling mistakes.
+ Solution:
+-Automatically checks availability, confirms bookings and updates calendars.
 
 ### AI Customer Support Agent
 An AI-powered chatbot that answers customer questions and escalates when required.
