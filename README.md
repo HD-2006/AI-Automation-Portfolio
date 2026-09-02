@@ -36,6 +36,25 @@ Problem:
 
 Solution:
 - AI answers common questions instantly and escalates complex enquiries when needed.
+  
+## AI Invoice Processor
+
+**Problem**
+
+Finance teams spend valuable time manually reading invoices and entering information into spreadsheets.
+
+**Solution**
+
+Uses OpenAI to extract structured invoice data, stores the information in Google Sheets and automatically sends an email notification once processing is complete.
+
+**Features**
+
+- AI invoice data extraction
+- JSON structured output
+- Google Sheets integration
+- Gmail notifications
+- Webhook API endpoint
+
 
  ## Tech Stack                              
 
