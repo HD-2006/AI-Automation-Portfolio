@@ -33,7 +33,7 @@ Problem:
 Solution:
 - AI answers common questions instantly and escalates complex enquiries when needed.
 
- ## Tech Stack
+ ## Tech Stack                              
 
 - n8n
 - OpenAI
@@ -41,3 +41,13 @@ Solution:
 - Gmail
 - Webhooks
 - JSON APIs
+
+## Business value
+
+✓ Saves 4 hours/week
+
+✓ Instant notifications
+
+✓ Zero missed enquiries
+
+✓ Automatic lead tracking
