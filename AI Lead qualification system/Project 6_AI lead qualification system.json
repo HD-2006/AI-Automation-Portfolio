@@ -1,0 +1,400 @@
+{
+  "name": "Project 6/AI lead qualification system",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-qualification",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5d2c4957-ac1e-4c99-b5d9-5304d379ec85",
+      "name": "Webhook",
+      "webhookId": "08ab0364-8161-4301-aad1-aab50f2c30e7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "67fad995-f9b0-4166-8322-707e7baf7350",
+              "name": "Name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "f87b98b6-4887-4638-8507-8957bdd286fc",
+              "name": "company",
+              "value": "={{ $json.body.company }}",
+              "type": "string"
+            },
+            {
+              "id": "b85d8ba3-a7ad-4759-918b-953e4f56d33a",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "e1410f40-89d3-42e4-8452-4783c677d564",
+              "name": "phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "baa15f28-681b-407b-b295-a3c9abac0ba1",
+              "name": "budget",
+              "value": "={{ $json.body.budget }}",
+              "type": "string"
+            },
+            {
+              "id": "54eb5cd3-1adf-4833-b77a-2c388659cc63",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "dcc5b70e-f5f1-4704-b5a7-6a6a0249c893",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Name: {{ $json.Name }}\nCompany: {{ $json.company }}\n\nEmail: {{ $json.email }}\n\nPhone: {{ $json.phone }}\n\nBudget: {{ $json.budget }}\n\nMessage:\n{{ $json.message }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an AI sales assistant.\n\nScore the lead.\n\nReturn:\n- lead_score\n- priority\n- summary\n- recommended_action"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "27e8e108-22a9-46d3-bd6e-73742b232ce5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        208
+      ],
+      "id": "3fc5c084-8c71-43df-9875-7a5355fd7475",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Mvo3WnUh1G84VmBM",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"lead_score\": 85,\n  \"priority\": \"High\",\n  \"summary\": \"Lead summary\",\n  \"recommended_action\": \"Call the customer\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        208
+      ],
+      "id": "6755f70b-87b7-4c32-8653-7dac3b22e5d0",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "812911bf-0733-4203-b70f-c445008f0e48",
+              "leftValue": "={{ $json.output.lead_score }}",
+              "rightValue": 80,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        816,
+        0
+      ],
+      "id": "d2743c4b-db6e-4e27-a038-5019808613ae",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "dishalis06@gmail.com",
+        "subject": "High quality lead",
+        "message": "=Name:  {{ $('Edit Fields').item.json.Name }}\n\nCompany: {{ $('Edit Fields').item.json.company}}\n\nLead score: {{ $json.output.lead_score }}\n\npriority: {{ $json.output.priority }}\n\nsummary: {{ $json.output.summary }}\n\nreccomended action: {{ $json.output.recommended_action }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        976,
+        -128
+      ],
+      "id": "76ae2105-3caf-4a96-8c3e-1c3a2b62c896",
+      "name": "Send a message",
+      "webhookId": "b9220739-539b-4cb7-bfa1-afda9903ff73",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "i2g7BFhDkRvHXWx1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XoWbLnl2E5ugLtc6LJUzp4FGoSLEpIloXn7YbkHfjIo",
+          "mode": "list",
+          "cachedResultName": "leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XoWbLnl2E5ugLtc6LJUzp4FGoSLEpIloXn7YbkHfjIo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XoWbLnl2E5ugLtc6LJUzp4FGoSLEpIloXn7YbkHfjIo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Edit Fields').item.json.Name }}",
+            "Company": "={{ $('Edit Fields').item.json.company }}",
+            "email": "={{ $('Edit Fields').item.json.email }}",
+            "lead score": "={{ $('AI Agent').item.json.output.lead_score }}",
+            "priority": "={{ $('AI Agent').item.json.output.priority }}",
+            "summary": "={{ $('AI Agent').item.json.output.summary }}",
+            "reccomended action": "={{ $('AI Agent').item.json.output.recommended_action }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lead score",
+              "displayName": "lead score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reccomended action",
+              "displayName": "reccomended action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Column 8",
+              "displayName": "Column 8",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        96
+      ],
+      "id": "a4bface9-89d1-4939-af2d-43576f859c71",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hokyF9ciSxz6czxc",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ab28d105-eede-4c8b-b0e6-1faf389e1fc3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ce7ba09317d93819395d86c5e901248a252bf2a6c94ae1e76eebdcb31ae9d932"
+  },
+  "nodeGroups": [],
+  "id": "lWrgBuF6zVmUVspb",
+  "tags": []
+}
