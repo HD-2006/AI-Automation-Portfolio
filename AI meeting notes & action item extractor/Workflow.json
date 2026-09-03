@@ -1,0 +1,310 @@
+{
+  "name": "AI meeting notes & action item extractor",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meeting-notes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "69673f75-cc0a-4adc-91df-28807a622b38",
+      "name": "Webhook",
+      "webhookId": "bf2ec5d5-794b-4e6d-9263-2c8357176c95"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "daaa5ef9-63c3-4782-9c70-59e429058f31",
+              "name": "meeting_notes",
+              "value": "={{ $json.body.meeting_notes }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "023f0da9-c8cd-4ab6-be0d-f8c5efcd6de0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=meeting notes:   \n\n{{ $json.meeting_notes }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an AI meeting assistant.\n\nAnalyse the meeting notes and return:\n\n- summary\n- action_items\n- owner\n- deadline\n- sentiment\n\nThe sentiment must be one of:\n- Positive\n- Neutral\n- Negative\n\nReturn only the structured output."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "809dcff2-95c9-4ce0-823b-2de47290224c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        208
+      ],
+      "id": "2ce307f5-9162-49e9-8035-83610ffa5887",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Mvo3WnUh1G84VmBM",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"summary\": \"The team approved the new marketing campaign.\",\n  \"action_items\": [\n    \"Design landing page\",\n    \"Create Facebook ads\",\n    \"Review campaign next Friday\"\n  ],\n  \"owner\": \"Sarah\",\n  \"deadline\": \"Friday\",\n  \"sentiment\": \"Positive\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        208
+      ],
+      "id": "ab9b892f-410a-4986-aea4-b50d279d68a8",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "13BqgMtyoiLoPBAPdp6ewBiMbACCXhqyKeHWuAzE55eE",
+          "mode": "list",
+          "cachedResultName": "sheet 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13BqgMtyoiLoPBAPdp6ewBiMbACCXhqyKeHWuAzE55eE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13BqgMtyoiLoPBAPdp6ewBiMbACCXhqyKeHWuAzE55eE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "summary": "={{ $json.output.summary }}",
+            "action items": "={{ $json.output.action_items }}",
+            "owner": "={{ $json.output.owner }}",
+            "deadline": "={{ $json.output.deadline }}",
+            "sentiment": "={{ $json.output.sentiment }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "action items",
+              "displayName": "action items",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "owner",
+              "displayName": "owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "deadline",
+              "displayName": "deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment",
+              "displayName": "sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Column 6",
+              "displayName": "Column 6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        816,
+        0
+      ],
+      "id": "95078158-7a81-4a40-8497-8e8a75b54766",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hokyF9ciSxz6czxc",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "dishalis06@gmail.com",
+        "subject": "Meeting Summary",
+        "message": "=Meeting Summary\n\nSummary:  {{ $('AI Agent').item.json.output.summary }}\n\nAction Items: {{ $('AI Agent').item.json.output.action_items }}\n\nOwner: {{ $('AI Agent').item.json.output.owner }}\n\nDeadline: {{ $('AI Agent').item.json.output.deadline }}\n\nSentiment:{{ $('AI Agent').item.json.output.sentiment }} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "4ec760ab-6562-4214-8303-1e7fe51952c8",
+      "name": "Send a message",
+      "webhookId": "ac838576-a566-45ef-bc44-27011ed6ff93",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "i2g7BFhDkRvHXWx1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7bb77efc-a96b-41b7-b73c-7f9b86d58733",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ce7ba09317d93819395d86c5e901248a252bf2a6c94ae1e76eebdcb31ae9d932"
+  },
+  "nodeGroups": [],
+  "id": "Lhq037jU2TLPTGFR",
+  "tags": []
+}
