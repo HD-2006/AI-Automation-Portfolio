@@ -55,6 +55,25 @@ Uses OpenAI to extract structured invoice data, stores the information in Google
 - Gmail notifications
 - Webhook API endpoint
 
+  ## AI Lead Qualification System
+
+**Problem**
+
+- Sales teams spend time manually reviewing enquiries to determine which leads are worth contacting first.
+
+**Solution**
+
+- Uses OpenAI to analyse incoming leads, assign a lead score and priority level, then automatically routes high-value leads to Gmail while storing lower-priority leads in Google Sheets.
+
+**Features**
+
+- AI lead scoring
+- Automatic priority classification
+- Structured JSON output
+- Gmail notifications
+- Google Sheets integration
+- Webhook API endpoint
+
 
  ## Tech Stack                              
 
