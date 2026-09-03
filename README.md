@@ -5,36 +5,39 @@ A collection of production-ready AI automation workflows built using n8n, OpenAI
 ## Projects
 
 ### Customer Enquiry Logger
-Problem:
+
+**Problem**
 - Businesses receive enquiries through forms and emails that often go unanswered or aren't tracked.
 
-Solution:
+**Solution**
 - This workflow captures every enquiry, classifies it using OpenAI, stores it inside Google Sheets and instantly alerts the business owner.
 
 
 ### Garage Contact Form
-- Problem:
+
+ **Problem**
 - Businesses receive website enquiries but often don't respond quickly enough.
 
-Solution:
+**Solution**
 - Uses AI to categorise enquiries, notify the business instantly and save leads for follow-up.
 
 
  ### Appointment Booking System
 Handles booking requests, availability and confirmations automatically.
  
- Problem:
+ **Problem**
 -Booking appointments manually takes time and causes scheduling mistakes.
  
- Solution:
+ **Solution**
 -Automatically checks availability, confirms bookings and updates calendars.
 
 ### AI Customer Support Agent
 An AI-powered chatbot that answers customer questions and escalates when required.
-Problem:
+
+**Problem** 
 - Businesses spend too much time answering the same customer questions.
 
-Solution:
+**Solution**
 - AI answers common questions instantly and escalates complex enquiries when needed.
   
 ## AI Invoice Processor
@@ -74,6 +77,22 @@ Uses OpenAI to extract structured invoice data, stores the information in Google
 - Google Sheets integration
 - Webhook API endpoint
 
+## AI Email Triage Assistant
+
+**Problem**
+- Support teams waste time manually reading emails and deciding which department should handle them.
+
+**Solution**
+- Uses OpenAI to analyse incoming emails, classify them into the correct department and automatically send the email to the appropriate team.
+
+**Features**
+- AI email classification
+- JSON structured output
+- Department routing
+- Gmail integration
+- Webhook API endpoint
+
+
 
  ## Tech Stack                              
 
@@ -83,6 +102,8 @@ Uses OpenAI to extract structured invoice data, stores the information in Google
 - Gmail
 - Webhooks
 - JSON APIs
+- Switch routing
+- If Node
 
 ## Business value
 
