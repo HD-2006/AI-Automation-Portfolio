@@ -93,6 +93,23 @@ Uses OpenAI to extract structured invoice data, stores the information in Google
 - Webhook API endpoint
 
 
+## AI Meeting Notes Extractor
+
+**Problem**
+Meeting notes often require manual summarising, making it easy to miss important tasks, deadlines and action items.
+
+**Solution**
+Uses OpenAI to analyse meeting notes, generate a summary, extract action items, identify deadlines and store the results automatically.
+
+**Features**
+- AI meeting summarisation
+- Action item extraction
+- Deadline identification
+- Google Sheets integration
+- Gmail summary notification
+- Webhook API endpoint
+
+
 
  ## Tech Stack                              
 
