@@ -109,6 +109,25 @@ Uses OpenAI to analyse meeting notes, generate a summary, extract action items, 
 - Gmail summary notification
 - Webhook API endpoint
 
+## AI Sales Proposal Generator ##
+
+**Problem**
+Creating professional sales proposals manually takes time and can delay responses to potential clients.
+
+**Solution**
+Uses OpenAI to generate a structured sales proposal based on a company's details and business challenges, then stores the proposal and emails a copy automatically.
+
+**Features**
+
+- AI proposal generation
+- Executive summary creation
+- Solution recommendations
+- Price estimation
+- Timeline generation
+- Google Sheets integration
+- Gmail notifications
+- Webhook API endpoint
+
 
 
  ## Tech Stack                              
